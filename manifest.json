@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Anti Stat Button Twitter",
+  "version": "1.0",
+
+  "description": "Removes the stat icon in twitter",
+  "homepage_url": "https://github.com/Seboran/Anti-Stat-Button-Twitter",
+  "icons": {
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitter.com/*"],
+      "css": ["main.css"]
+    }
+  ]
+}
