@@ -1,39 +1,32 @@
-let hidden = false;
-
-const hidePage = `[aria-label^="View Tweet analytics"] {
-  display: none;
-}`
-
-/*
- * Updates the browserAction icon to reflect whether the current page
- * is already bookmarked.
- */
-function updateIcon() {
-  browser.browserAction.setIcon({
-    path: hidden ? {
-      19: "icons/star-filled-19.png",
-      38: "icons/star-filled-38.png"
-    } : {
-      19: "icons/star-empty-19.png",
-      38: "icons/star-empty-38.png"
-    },
-  });
-  browser.browserAction.setTitle({
-    // Screen readers can see the title
-    title: hidden ? 'Show' : 'Hide',
-  }); 
+function reportExecuteScriptError(error) {
+  console.error(`Failed to execute beastify content script: ${error}`)
 }
 
-/*
- * Add or remove the bookmark on the current page.
- */
-function toggleHide() {
-  if (hidden) {
-    browser.tabs.insertCSS({ code: hidePage }).then(() => {})
-  } else {
-    browser.tabs.removeCSS({ code: hidePage }).then(() => {})
+let hiddenToggle = false
+
+function toggleHide(tabs) {
+  browser.tabs.sendMessage(tabs[0].id, {
+    command: hiddenToggle ? 'show' : 'hide',
+  })
+  hiddenToggle = !hiddenToggle
+}
+
+const filterUrls = { urls: ['*://twitter.com/*'] }
+
+browser.browserAction.onClicked.addListener(() =>
+  browser.tabs.query({ currentWindow: true, active: true }).then(toggleHide),
+)
+
+// browser.tabs.onCreated.addListener(() =>
+//   browser.tabs.query({ currentWindow: true, active: true }).then(toggleHide),
+// )
+
+browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status == 'complete') {
+    setTimeout(
+      browser.tabs
+        .query({ currentWindow: true, active: true })
+        .then(toggleHide),
+    )
   }
-  hidden = !hidden
-}
-
-browser.browserAction.onClicked.addListener(toggleHide);
+}, filterUrls)
