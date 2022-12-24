@@ -6,6 +6,7 @@
   "description": "Removes the stat icon in twitter",
   "homepage_url": "https://github.com/Seboran/Anti-Stat-Button-Twitter",
   "icons": {
+    "48": "icons/analytics.png"
   },
 
   "content_scripts": [
@@ -15,12 +16,18 @@
   ],
 
   "permissions": [
-    "activeTab"
+    "tabs",
+    "activeTab",
+    "background"
   ],
 
   "browser_action": {
     "default_icon": "icons/analytics.png",
-    "default_title": "AntiStatTwitter",
-    "default_popup": "popup/switch.html"
+    "default_title": "Hide twitter analytics!"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
   }
+
 }
