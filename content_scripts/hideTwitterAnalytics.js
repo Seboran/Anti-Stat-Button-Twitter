@@ -9,7 +9,7 @@
   }
   window.hasRun = true;
 
-  const hidePage = `[aria-label^="View Tweet analytics"] {
+  const hidePage = `[aria-label$="View Tweet analytics"] {
     display: none;
   }`
 
