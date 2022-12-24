@@ -10,8 +10,17 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.twitter.com/*"],
-      "css": ["main.css"]
+      "matches": ["*://*.twitter.com/*"]
     }
-  ]
+  ],
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/analytics.png",
+    "default_title": "AntiStatTwitter",
+    "default_popup": "popup/switch.html"
+  }
 }
