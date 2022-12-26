@@ -9,7 +9,7 @@
   }
   window.hasRun = true;
 
-  const hidePage = `[aria-label$="View Tweet analytics"] {
+  const hidePage = `[aria-label$="View Tweet analytics"], [aria-label$="Voir les statistiques du Tweet"], [aria-label$="Voir les statistiques des Tweets"] {
     display: none;
   }`
 
